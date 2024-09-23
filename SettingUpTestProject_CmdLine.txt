@@ -1,0 +1,89 @@
+Testing Projects
+
+Monday 23 September 2024
+19:44
+
+// in a folder for example MyApp
+
+// Create a main Project (replace MyProject with something meaningful)
+dotnet new console -n MyProject
+
+// Create a Test Project (replace MyProject with something meaningful)
+dotnet new mstest -n TestMyProject
+
+// Create a (common) Solution file (MySolution with something meaningful)
+dotnet new sln -n MySolution
+
+// add a reference to the new Solution from for the Main Project
+// (replace MyProject for something meaningful)
+dotnet sln add .\MyProject\MyProject.csproj
+
+// add a reference to the new Solution from for the Test Project
+// (replace MyProject for something meaningful)
+dotnet sln add .\TestMyProject\TestMyProject.csproj
+
+// Now cd to the Test Project
+cd TestMyProject
+
+/* Note: Now in the Test Project folder */
+
+// Add a reference for the Main Project to the Test Project
+dotnet add reference ..\MyProject\MyProject.csproj
+
+// view the Test Project .csprog file
+cat .\TestMyProject.csproj
+
+// you should see a 3rd <ItemGroup> section added
+  <ItemGroup>
+     <ProjectReference Include="..\MyProject\MyProject.csproj" />
+  </ItemGroup>
+
+// Cd back to the root (solution folder)
+
+// In the UnitTest1.cs file, at the top, add an using clause to use the namespace of
+// the MyProject (Main Project)
+
+// Example where LeetCodeSolve is the name of the namespace in the 
+//  Main Project
+using LeetCodeSolve;
+
+// Example UintTest1.cs
+
+using LeetCodeSolve;
+namespace TestL2024Sep22;
+[TestClass]
+public class UnitTest1
+{
+    [TestMethod]
+    public void TestMethod1()
+    {
+        var isv = new TestIsValidSudoku();
+        char[][] boardDataExam0 = [['5','3','.','.','7','.','.','.','.']
+            ,['6','.','.','1','9','5','.','.','.']
+            ,['.','9','8','.','.','.','.','6','.']
+            ,['8','.','.','.','6','.','.','.','3']
+            ,['4','.','.','8','.','3','.','.','1']
+            ,['7','.','.','.','2','.','.','.','6']
+            ,['.','6','.','.','.','.','2','8','.']
+            ,['.','.','.','4','1','9','.','.','5']
+            ,['.','.','.','.','8','.','.','7','9']];
+        var res = isv.IsValidSudoku(boardDataExam0);
+        Assert.IsTrue(res);
+    }
+}
+
+// cd back to the roow (Solution) folder
+cd ..
+
+// now run the test
+dotnet test
+
+// and to run the main project
+// cd to the main project
+cd MyProject
+
+// and run the program
+dotnet run
+
+
+
